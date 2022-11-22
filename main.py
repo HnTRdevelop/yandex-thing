@@ -4,13 +4,14 @@ from PyQt5.QtWidgets import QWidget, QApplication
 from PyQt5.QtGui import QPainter, QColor
 from PyQt5.QtCore import QPointF
 from PyQt5 import uic
+from UI import *
 
 
-class Widget(QWidget):
+class Widget(Ui_Form, QWidget):
     def __init__(self):
         super().__init__()
-        
-        uic.loadUi('UI.ui', self)
+        QWidget.__init__(self)
+        self.setupUi(self)
         self.start_drawing = False
         self.btn_create.clicked.connect(self.draw)
         
@@ -23,7 +24,9 @@ class Widget(QWidget):
             qp = QPainter()	
             qp.begin(self)
             
-            qp.setBrush(QColor(255, 255, 0))
+            qp.setBrush(QColor(rnd.randint(0, 255), 
+                               rnd.randint(0, 255),
+                               rnd.randint(0, 255)))
             pos = QPointF(rnd.uniform(100, 700), rnd.uniform(100, 500))
             radius = rnd.uniform(25, 250)
             qp.drawEllipse(pos, radius, radius)
